@@ -38,18 +38,18 @@ function Row1() {
   const dispatch = useDispatch();
   const id = useSelector((s) => s.game.id);
   const practice = useSelector((s) => s.game.practice);
-  const [title, titleClass] = practice
-    ? id < PRACTICE_MODE_MIN_ID
-      ? [`Historical Duotrigordle #${id}`, "historical"]
-      : [`Practice Duotrigordle`, "practice"]
-    : [`Daily Duotrigordle #${id}`, null];
+  const [title, titleClass] = ["Happy Birthday G'Ma! 🎉", null];
+  // const [title, titleClass] = practice
+  //   ? id < PRACTICE_MODE_MIN_ID
+  //     ? [`Historical Duotrigordle #${id}`, "historical"]
+  //     : [`Practice Duotrigordle`, "practice"]
+  //   : [`Daily Duotrigordle #${id}`, null];
 
   // Refs so that the buttons are blurred on press
   // so that pressing enter again does not cause the
   // button to be activated again
   const practiceRef = useRef<HTMLButtonElement>(null);
   const newRef = useRef<HTMLButtonElement>(null);
-  const backRef = useRef<HTMLButtonElement>(null);
   const histRef = useRef<HTMLButtonElement>(null);
   const handlePracticeClick = () => {
     practiceRef.current?.blur();
@@ -90,13 +90,6 @@ function Row1() {
     }
   };
 
-  const handleBackClick = () => {
-    backRef.current?.blur();
-    const res = window.confirm("Are you sure you want to exit practice mode?");
-    if (!res) return;
-    loadGameFromLocalStorage(dispatch);
-  };
-
   // Fullscreen
   const [fullscreen, setFullscreen] = useState(isFullscreen);
   useEffect(() => {
@@ -117,45 +110,9 @@ function Row1() {
   };
   return (
     <div className="row-1">
-      {practice ? (
-        <>
-          <button
-            className="mode-switch"
-            ref={backRef}
-            onClick={handleBackClick}
-          >
-            Back
-          </button>
-          <button
-            className="mode-switch"
-            ref={histRef}
-            onClick={handleHistClick}
-          >
-            Hist
-          </button>
-          <button className="mode-switch" ref={newRef} onClick={handleNewClick}>
-            New
-          </button>
-        </>
-      ) : (
-        <>
-          <button
-            className="mode-switch"
-            ref={practiceRef}
-            onClick={handlePracticeClick}
-          >
-            Practice
-          </button>
-          <div />
-          <div />
-        </>
-      )}
       <p className={cn("title", titleClass)}>{title}</p>
       <button className="icon" onClick={() => dispatch(showPopup("stats"))}>
         <img src={statsSvg} alt="Stats" />
-      </button>
-      <button className="icon" onClick={() => dispatch(showPopup("about"))}>
-        <img src={helpSvg} alt="Help" />
       </button>
       <button className="icon" onClick={() => dispatch(showPopup("settings"))}>
         <img src={settingsSvg} alt="Settings" />

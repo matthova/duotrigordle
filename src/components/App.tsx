@@ -11,6 +11,8 @@ import LocalStorage from "./LocalStorage";
 import Result from "./Result";
 import { Settings } from "./Settings";
 import Stats from "./Stats";
+// @ts-ignore
+import youDidItMovie from "../assets/you-did-it.mp4";
 
 export default function App() {
   const targets = useSelector((s) => s.game.targets);
@@ -32,21 +34,6 @@ export default function App() {
   useEffect(() => {
     addDebugHooks();
   }, []);
-
-  // Prevent duotrigordle form working in iframes
-  // (looking at you https://dordle.io/duotrigordle)
-  if (window.top !== window) {
-    return (
-      <p>
-        Play Duotrigordle at{" "}
-        <a href="https://duotrigordle.com" target="_blank" rel="noreferrer">
-          https://duotrigordle.com
-        </a>{" "}
-        (if you are seeing this message, the website you're playing on probably
-        stole this game and/or is making ad revenue)
-      </p>
-    );
-  }
 
   return (
     <div
@@ -72,6 +59,20 @@ export default function App() {
       <Settings />
       <Stats />
       <LocalStorage />
+      {gameOver ? (
+        <video
+          style={{
+            width: "100%",
+            height: "100%",
+            maxWidth: "100%",
+            maxHeight: "100%",
+            margin: "0 auto",
+          }}
+          controls
+        >
+          <source src={youDidItMovie} type="video/mp4" />
+        </video>
+      ) : null}
     </div>
   );
 }

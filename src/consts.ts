@@ -1,6 +1,6 @@
-export const NUM_BOARDS = 32;
+export const NUM_BOARDS = 16;
 
-export const NUM_GUESSES = 37;
+export const NUM_GUESSES = 21;
 
 export const PRACTICE_MODE_MIN_ID = 100000;
 
@@ -41,7 +41,30 @@ export const ALPHABET = new Set([
   "Z",
 ]);
 
+export const BIRTHDAY_WORDS = [
+  "HAPPY",
+  "BIRDY",
+  "MOMMY",
+  "SMART",
+  "STYLE",
+  "QUILT",
+  "SOLVE",
+  "DAISY",
+  "ELLEN",
+  "CROWN",
+  "LUCKY",
+  "YOUTH",
+  "PARTY",
+  "CHEER",
+  "YEARS",
+  "COPSE",
+];
+
 export const WORDS_TARGET = [
+  "MOMMY",
+  "BIRDY",
+  "ELLEN",
+  "YEARS",
   "ABACK",
   "ABASE",
   "ABATE",
@@ -3652,6 +3675,7 @@ export const WORDS_VALID = new Set([
   "BIRCH",
   "BIRDO",
   "BIRDS",
+  "BIRDY",
   "BIRIS",
   "BIRKS",
   "BIRLE",
@@ -6043,6 +6067,7 @@ export const WORDS_VALID = new Set([
   "ELIDE",
   "ELINT",
   "ELITE",
+  "ELLEN",
   "ELMEN",
   "ELOGE",
   "ELOGY",
@@ -8599,6 +8624,7 @@ export const WORDS_VALID = new Set([
   "KARAS",
   "KARAT",
   "KAREE",
+  "KAREN",
   "KAREZ",
   "KARKS",
   "KARMA",

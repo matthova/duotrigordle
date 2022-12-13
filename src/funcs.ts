@@ -1,4 +1,4 @@
-import { NUM_BOARDS, START_DATE, WORDS_TARGET } from "./consts";
+import { BIRTHDAY_WORDS, NUM_BOARDS, START_DATE, WORDS_TARGET } from "./consts";
 
 // Generate integers 0 <= i < max
 export function range(max: number): number[] {
@@ -100,7 +100,8 @@ export function getTargetWords(id: number): string[] {
       if (idx !== -1) targetPool.splice(idx, 1);
     }
   }
-  const targetWords: string[] = [];
+  const targetWords: string[] = [...BIRTHDAY_WORDS];
+
   const rng = MersenneTwister(id);
   while (targetWords.length < NUM_BOARDS) {
     const idx = rng.u32() % targetPool.length;
