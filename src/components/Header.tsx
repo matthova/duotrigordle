@@ -1,17 +1,15 @@
 import cn from "classnames";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useDispatch } from "react-redux";
 import fullscreenExitSvg from "../assets/fullscreen-exit.svg";
 import fullscreenSvg from "../assets/fullscreen.svg";
-import helpSvg from "../assets/help.svg";
 import settingsSvg from "../assets/settings.svg";
 import statsSvg from "../assets/stats.svg";
-import { NUM_BOARDS, NUM_GUESSES, PRACTICE_MODE_MIN_ID } from "../consts";
+import { NUM_BOARDS, NUM_GUESSES } from "../consts";
 import {
   enterFullscreen,
   exitFullscreen,
   formatTimeElapsed,
-  getTodaysId,
   isFullscreen,
   randU32,
 } from "../funcs";
@@ -22,7 +20,6 @@ import {
   startGame,
   useSelector,
 } from "../store";
-import { loadGameFromLocalStorage } from "./LocalStorage";
 
 export default function Header() {
   return (
@@ -36,8 +33,6 @@ export default function Header() {
 
 function Row1() {
   const dispatch = useDispatch();
-  const id = useSelector((s) => s.game.id);
-  const practice = useSelector((s) => s.game.practice);
   const [title, titleClass] = ["Happy Birthday G'Ma! 🎉", null];
   // const [title, titleClass] = practice
   //   ? id < PRACTICE_MODE_MIN_ID
@@ -48,47 +43,6 @@ function Row1() {
   // Refs so that the buttons are blurred on press
   // so that pressing enter again does not cause the
   // button to be activated again
-  const practiceRef = useRef<HTMLButtonElement>(null);
-  const newRef = useRef<HTMLButtonElement>(null);
-  const histRef = useRef<HTMLButtonElement>(null);
-  const handlePracticeClick = () => {
-    practiceRef.current?.blur();
-    dispatch(startGame({ id: randU32(), practice: true }));
-  };
-
-  const handleNewClick = () => {
-    newRef.current?.blur();
-    const res = window.confirm(
-      "Are you sure you want to start a new Practice Duotrigordle?\n" +
-        "(Pro-tip: You can also press Ctrl+R)"
-    );
-    if (!res) return;
-    dispatch(startGame({ id: randU32(), practice: true }));
-  };
-
-  const handleHistClick = () => {
-    histRef.current?.blur();
-    const res = window.prompt(
-      "Play a Historical Duotrigordle!\n" +
-        "Enter a past Daily Duotrigordle # to play:"
-    );
-    if (res === null) return;
-    const num = parseInt(res ?? "", 10);
-    if (isNaN(num)) {
-      alert("Please enter a number");
-    } else if (num < getTodaysId()) {
-      dispatch(startGame({ id: num, practice: true }));
-    } else if (num >= PRACTICE_MODE_MIN_ID) {
-      // Allow numbers greater than PRACTICE_MODE_MIN_ID for people that want to play with duotrigordle practice seed
-      alert(
-        `Starting Practice Duotrigordle with seed ${num}\n` +
-          `(Note: you can set a Practice Duotrigordle seed ≥100000)`
-      );
-      dispatch(startGame({ id: num, practice: true }));
-    } else {
-      alert("Please enter a past Daily Duotrigordle #");
-    }
-  };
 
   // Fullscreen
   const [fullscreen, setFullscreen] = useState(isFullscreen);
